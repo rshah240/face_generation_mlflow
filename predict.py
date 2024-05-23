@@ -18,12 +18,17 @@ def view_samples(epoch, samples):
         count = count + 1
     fig.savefig("result.png")
 
-mlflow.set_tracking_uri("http://localhost:5000")
-device = ("cuda" if torch.cuda.is_available() else "cpu")
-logged_model = 'runs:/f8d4efee73f740d59e6da3d16e3e9c0d/model'
+# mlflow.set_tracking_uri("http://localhost:5000")
+# device = ("cuda" if torch.cuda.is_available() else "cpu")
+# logged_model = 'runs:/f8d4efee73f740d59e6da3d16e3e9c0d/model'
+model_name = "dcgan_face"
+alias = "best_model"
+model_uri = f"models:/{model_name}@{alias}"
+# Load model as a PyFuncModel.
+loaded_model = mlflow.pyfunc.load_model(model_uri)
 
 # Load model as a PyFuncModel.
-loaded_model = mlflow.pyfunc.load_model(logged_model)
+# loaded_model = mlflow.pyfunc.load_model(logged_model)
 
 
 data = np.random.uniform(-1,1, size = (16, 100)).astype("float32")
